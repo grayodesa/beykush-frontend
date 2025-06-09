@@ -24,7 +24,7 @@ export default function WineCard({ wine, locale = 'uk' }: WineCardProps) {
       viewDetails: 'Детальніше',
       inStock: 'В наявності',
       outOfStock: 'Немає в наявності',
-      volume: 'Об\'єм',
+      volume: "Об'єм",
       alcohol: 'Алкоголь',
       grapeVariety: 'Сорт винограду',
       vintage: 'Рік врожаю',
@@ -71,14 +71,13 @@ export default function WineCard({ wine, locale = 'uk' }: WineCardProps) {
 
       // Показываем уведомление об успешном добавлении
       setIsLoading(false);
-      
+
       // Анимация кнопки
       const button = e.currentTarget;
       button.textContent = t.added;
       setTimeout(() => {
         button.textContent = t.addToCart;
       }, 2000);
-      
     } catch (error) {
       console.error('Error adding to cart:', error);
       setIsLoading(false);
@@ -92,7 +91,7 @@ export default function WineCard({ wine, locale = 'uk' }: WineCardProps) {
   };
 
   const isInStock = wine.stockStatus === 'IN_STOCK';
-  const discountPercentage = wine.salePrice 
+  const discountPercentage = wine.salePrice
     ? Math.round((1 - parseFloat(wine.salePrice) / parseFloat(wine.regularPrice)) * 100)
     : 0;
 
@@ -112,10 +111,10 @@ export default function WineCard({ wine, locale = 'uk' }: WineCardProps) {
           className="absolute top-4 right-4 z-10 p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-md hover:shadow-lg transition-all duration-200"
           aria-label="Add to favorites"
         >
-          <Heart 
+          <Heart
             className={`w-5 h-5 transition-colors ${
               isFavorite ? 'fill-red-500 text-red-500' : 'text-gray-600 hover:text-red-500'
-            }`} 
+            }`}
           />
         </button>
 
@@ -135,7 +134,7 @@ export default function WineCard({ wine, locale = 'uk' }: WineCardProps) {
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-gray-400">
                 <svg className="w-20 h-20" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2zm0 2v14h14V5H5zm7 2a1 1 0 011 1v3.5a1.5 1.5 0 01-1.5 1.5h-1A1.5 1.5 0 019 11.5V8a1 1 0 011-1h2zm0 2h-2v1.5a.5.5 0 00.5.5h1a.5.5 0 00.5-.5V9z"/>
+                  <path d="M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2zm0 2v14h14V5H5zm7 2a1 1 0 011 1v3.5a1.5 1.5 0 01-1.5 1.5h-1A1.5 1.5 0 019 11.5V8a1 1 0 011-1h2zm0 2h-2v1.5a.5.5 0 00.5.5h1a.5.5 0 00.5-.5V9z" />
                 </svg>
               </div>
             </div>
@@ -205,7 +204,9 @@ export default function WineCard({ wine, locale = 'uk' }: WineCardProps) {
           {/* Статус наличия */}
           <div className="flex items-center gap-2 mb-4">
             <div className={`w-2 h-2 rounded-full ${isInStock ? 'bg-green-500' : 'bg-red-500'}`} />
-            <span className={`text-sm font-medium ${isInStock ? 'text-green-600' : 'text-red-600'}`}>
+            <span
+              className={`text-sm font-medium ${isInStock ? 'text-green-600' : 'text-red-600'}`}
+            >
               {isInStock ? t.inStock : t.outOfStock}
             </span>
           </div>
@@ -217,20 +218,17 @@ export default function WineCard({ wine, locale = 'uk' }: WineCardProps) {
               disabled={!isInStock || isLoading}
               className={`
                 flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all duration-200
-                ${isInStock 
-                  ? 'bg-red-600 text-white hover:bg-red-700 active:scale-95' 
-                  : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                ${
+                  isInStock
+                    ? 'bg-red-600 text-white hover:bg-red-700 active:scale-95'
+                    : 'bg-gray-100 text-gray-400 cursor-not-allowed'
                 }
               `}
             >
               <ShoppingCart className="w-5 h-5" />
-              {isLoading ? (
-                <span className="animate-pulse">...</span>
-              ) : (
-                t.addToCart
-              )}
+              {isLoading ? <span className="animate-pulse">...</span> : t.addToCart}
             </button>
-            
+
             <Link
               href={`/products/${wine.slug}`}
               className="flex items-center justify-center p-3 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
@@ -262,11 +260,11 @@ export function WineCardSkeleton() {
 }
 
 // Компонент списка вин
-export function WineGrid({ 
-  wines, 
+export function WineGrid({
+  wines,
   loading = false,
-  locale = 'uk' 
-}: { 
+  locale = 'uk',
+}: {
   wines: Wine[];
   loading?: boolean;
   locale?: 'uk' | 'en' | 'ru';
@@ -324,7 +322,7 @@ export interface Wine {
 // lib/utils/format.ts
 export function formatPrice(price: string | number, currency: string = 'UAH'): string {
   const numericPrice = typeof price === 'string' ? parseFloat(price) : price;
-  
+
   return new Intl.NumberFormat('uk-UA', {
     style: 'currency',
     currency: currency,

@@ -3,18 +3,21 @@
 ## 7.1 Принципы дизайна
 
 ### 7.1.1 Философия бренда
+
 - **Элегантность**: премиальное позиционирование
 - **Аутентичность**: связь с украинской культурой
 - **Минимализм**: чистый, современный дизайн
 - **Природность**: связь с виноградниками и морем
 
 ### 7.1.2 Визуальная иерархия
+
 - **F-pattern**: для контентных страниц
 - **Z-pattern**: для landing страниц
 - **Контраст**: четкое разделение элементов
 - **Белое пространство**: достаточно "воздуха"
 
 ### 7.1.3 Эмоциональный дизайн
+
 - **Доверие**: через профессионализм
 - **Желание**: через визуальную привлекательность
 - **Удовольствие**: через микровзаимодействия
@@ -23,22 +26,24 @@
 ## 7.2 Цветовая палитра
 
 ### 7.2.1 Основные цвета
+
 ```scss
 // Бренд цвета
-$beykush-purple: #7c3aed;      // Основной акцент
+$beykush-purple: #7c3aed; // Основной акцент
 $beykush-purple-light: #8b5cf6; // Hover состояние
-$beykush-purple-dark: #6d28d9;  // Active состояние
+$beykush-purple-dark: #6d28d9; // Active состояние
 
-$beykush-burgundy: #a94f5c;     // Вторичный акцент
+$beykush-burgundy: #a94f5c; // Вторичный акцент
 $beykush-burgundy-light: #c26975;
 $beykush-burgundy-dark: #8b3e49;
 
-$beykush-gold: #d4af37;         // Премиум акцент
+$beykush-gold: #d4af37; // Премиум акцент
 $beykush-gold-light: #e4c65b;
 $beykush-gold-dark: #b8941f;
 ```
 
 ### 7.2.2 Нейтральные цвета
+
 ```scss
 // Оттенки серого
 $gray-50: #fafafa;
@@ -53,11 +58,12 @@ $gray-800: #27272a;
 $gray-900: #18181b;
 
 // Фоновые цвета
-$beykush-cream: #faf8f3;        // Основной фон
-$beykush-white: #ffffff;        // Карточки
+$beykush-cream: #faf8f3; // Основной фон
+$beykush-white: #ffffff; // Карточки
 ```
 
 ### 7.2.3 Семантические цвета
+
 ```scss
 // Статусы
 $success: #22c55e;
@@ -73,6 +79,7 @@ $wine-sparkling: #f7e7ce;
 ```
 
 ### 7.2.4 Применение цветов
+
 - **60%** - Основной фон (cream/white)
 - **30%** - Вторичные элементы (grays)
 - **10%** - Акценты (purple/burgundy)
@@ -80,34 +87,41 @@ $wine-sparkling: #f7e7ce;
 ## 7.3 Типографика
 
 ### 7.3.1 Шрифты
+
 ```css
 /* Заголовки */
 font-family: 'Playfair Display', Georgia, serif;
 
 /* Основной текст */
-font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+font-family:
+  'Inter',
+  -apple-system,
+  BlinkMacSystemFont,
+  sans-serif;
 
 /* Моноширинный */
 font-family: 'JetBrains Mono', monospace;
 ```
 
 ### 7.3.2 Размеры шрифтов
+
 ```scss
 // Type scale (1.25 ratio)
-$text-xs: 0.75rem;    // 12px
-$text-sm: 0.875rem;   // 14px
-$text-base: 1rem;     // 16px
-$text-lg: 1.125rem;   // 18px
-$text-xl: 1.25rem;    // 20px
-$text-2xl: 1.5rem;    // 24px
-$text-3xl: 1.875rem;  // 30px
-$text-4xl: 2.25rem;   // 36px
-$text-5xl: 3rem;      // 48px
-$text-6xl: 3.75rem;   // 60px
-$text-7xl: 4.5rem;    // 72px
+$text-xs: 0.75rem; // 12px
+$text-sm: 0.875rem; // 14px
+$text-base: 1rem; // 16px
+$text-lg: 1.125rem; // 18px
+$text-xl: 1.25rem; // 20px
+$text-2xl: 1.5rem; // 24px
+$text-3xl: 1.875rem; // 30px
+$text-4xl: 2.25rem; // 36px
+$text-5xl: 3rem; // 48px
+$text-6xl: 3.75rem; // 60px
+$text-7xl: 4.5rem; // 72px
 ```
 
 ### 7.3.3 Стили текста
+
 ```scss
 // Заголовки
 .h1 {
@@ -133,6 +147,7 @@ $text-7xl: 4.5rem;    // 72px
 ```
 
 ### 7.3.4 Использование
+
 - **Playfair Display**: заголовки, логотип, акценты
 - **Inter**: основной текст, UI элементы
 - **Вес шрифта**: 400 (regular), 500 (medium), 600 (semibold), 700 (bold)
@@ -140,6 +155,7 @@ $text-7xl: 4.5rem;    // 72px
 ## 7.4 Сетка и отступы
 
 ### 7.4.1 Сетка
+
 ```scss
 // Container
 $container-max-width: 1280px;
@@ -152,24 +168,26 @@ $grid-gap: 1.5rem;
 ```
 
 ### 7.4.2 Spacing scale
+
 ```scss
 // Base unit: 4px
 $space-0: 0;
-$space-1: 0.25rem;  // 4px
-$space-2: 0.5rem;   // 8px
-$space-3: 0.75rem;  // 12px
-$space-4: 1rem;     // 16px
-$space-5: 1.25rem;  // 20px
-$space-6: 1.5rem;   // 24px
-$space-8: 2rem;     // 32px
-$space-10: 2.5rem;  // 40px
-$space-12: 3rem;    // 48px
-$space-16: 4rem;    // 64px
-$space-20: 5rem;    // 80px
-$space-24: 6rem;    // 96px
+$space-1: 0.25rem; // 4px
+$space-2: 0.5rem; // 8px
+$space-3: 0.75rem; // 12px
+$space-4: 1rem; // 16px
+$space-5: 1.25rem; // 20px
+$space-6: 1.5rem; // 24px
+$space-8: 2rem; // 32px
+$space-10: 2.5rem; // 40px
+$space-12: 3rem; // 48px
+$space-16: 4rem; // 64px
+$space-20: 5rem; // 80px
+$space-24: 6rem; // 96px
 ```
 
 ### 7.4.3 Breakpoints
+
 ```scss
 $breakpoint-xs: 320px;
 $breakpoint-sm: 640px;
@@ -182,6 +200,7 @@ $breakpoint-2xl: 1536px;
 ## 7.5 Компоненты UI
 
 ### 7.5.1 Кнопки
+
 ```scss
 // Размеры
 .btn-sm {
@@ -203,7 +222,7 @@ $breakpoint-2xl: 1536px;
 .btn-primary {
   background: $beykush-purple;
   color: white;
-  
+
   &:hover {
     background: $beykush-purple-light;
   }
@@ -217,6 +236,7 @@ $breakpoint-2xl: 1536px;
 ```
 
 ### 7.5.2 Формы
+
 ```scss
 // Input fields
 .input {
@@ -224,7 +244,7 @@ $breakpoint-2xl: 1536px;
   border: 1px solid $gray-300;
   border-radius: $radius-lg;
   font-size: $text-base;
-  
+
   &:focus {
     border-color: $beykush-purple;
     outline: 2px solid rgba($beykush-purple, 0.2);
@@ -241,13 +261,14 @@ $breakpoint-2xl: 1536px;
 ```
 
 ### 7.5.3 Карточки
+
 ```scss
 .card {
   background: white;
   border-radius: $radius-xl;
   box-shadow: $shadow-sm;
   overflow: hidden;
-  
+
   &:hover {
     box-shadow: $shadow-lg;
   }
@@ -257,11 +278,13 @@ $breakpoint-2xl: 1536px;
 ## 7.6 Иконки
 
 ### 7.6.1 Набор иконок
+
 - **Основной**: Lucide Icons
 - **Дополнительный**: Custom SVG icons
 - **Размеры**: 16px, 20px, 24px, 32px, 48px
 
 ### 7.6.2 Использование
+
 ```tsx
 // Размеры
 <Icon size="sm" />  // 16px
@@ -276,6 +299,7 @@ $breakpoint-2xl: 1536px;
 ```
 
 ### 7.6.3 Кастомные иконки
+
 - Бутылка вина
 - Бокал вина
 - Виноград
@@ -285,6 +309,7 @@ $breakpoint-2xl: 1536px;
 ## 7.7 Тени и радиусы
 
 ### 7.7.1 Тени
+
 ```scss
 $shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 $shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -298,20 +323,22 @@ $shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 ```
 
 ### 7.7.2 Радиусы
+
 ```scss
 $radius-none: 0;
-$radius-sm: 0.125rem;   // 2px
-$radius-md: 0.375rem;   // 6px
-$radius-lg: 0.5rem;     // 8px
-$radius-xl: 0.75rem;    // 12px
-$radius-2xl: 1rem;      // 16px
-$radius-3xl: 1.5rem;    // 24px
+$radius-sm: 0.125rem; // 2px
+$radius-md: 0.375rem; // 6px
+$radius-lg: 0.5rem; // 8px
+$radius-xl: 0.75rem; // 12px
+$radius-2xl: 1rem; // 16px
+$radius-3xl: 1.5rem; // 24px
 $radius-full: 9999px;
 ```
 
 ## 7.8 Анимации
 
 ### 7.8.1 Длительность
+
 ```scss
 $duration-fast: 150ms;
 $duration-normal: 200ms;
@@ -320,6 +347,7 @@ $duration-slower: 400ms;
 ```
 
 ### 7.8.2 Easing функции
+
 ```scss
 $ease-in: cubic-bezier(0.4, 0, 1, 1);
 $ease-out: cubic-bezier(0, 0, 0.2, 1);
@@ -328,6 +356,7 @@ $ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 ```
 
 ### 7.8.3 Анимации
+
 ```scss
 // Fade in
 @keyframes fadeIn {
@@ -355,24 +384,28 @@ $ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 ## 7.9 Паттерны дизайна
 
 ### 7.9.1 Карточка продукта
+
 - Изображение сверху (aspect-ratio 3:4)
 - Информация снизу с отступами
 - Hover эффект масштабирования
 - Быстрые действия при наведении
 
 ### 7.9.2 Hero секция
+
 - Полноэкранное изображение/видео
 - Затемнение для читаемости текста
 - Центрированный контент
 - CTA кнопки внизу
 
 ### 7.9.3 Формы
+
 - Label сверху
 - Подсказки под полем
 - Inline валидация
 - Группировка связанных полей
 
 ### 7.9.4 Навигация
+
 - Sticky header на скролле
 - Мега-меню для категорий
 - Мобильное меню справа
@@ -381,6 +414,7 @@ $ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 ## 7.10 Адаптивный дизайн
 
 ### 7.10.1 Mobile First
+
 ```scss
 // Base styles (mobile)
 .container {
@@ -404,27 +438,31 @@ $ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 ```
 
 ### 7.10.2 Touch targets
+
 - Минимум 44x44px для кнопок
 - Достаточные отступы между элементами
 - Увеличенные области клика
 
 ### 7.10.3 Responsive изображения
+
 ```html
 <picture>
-  <source media="(min-width: 1024px)" srcset="large.jpg">
-  <source media="(min-width: 768px)" srcset="medium.jpg">
-  <img src="small.jpg" alt="Wine bottle">
+  <source media="(min-width: 1024px)" srcset="large.jpg" />
+  <source media="(min-width: 768px)" srcset="medium.jpg" />
+  <img src="small.jpg" alt="Wine bottle" />
 </picture>
 ```
 
 ## 7.11 Доступность
 
 ### 7.11.1 Цветовой контраст
+
 - Обычный текст: минимум 4.5:1
 - Крупный текст: минимум 3:1
 - UI элементы: минимум 3:1
 
 ### 7.11.2 Фокус стили
+
 ```scss
 .focus-visible {
   outline: 2px solid $beykush-purple;
@@ -433,6 +471,7 @@ $ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 ```
 
 ### 7.11.3 ARIA labels
+
 - Все интерактивные элементы
 - Описательные labels
 - Состояния элементов
@@ -440,6 +479,7 @@ $ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 ## 7.12 Темная тема (опционально)
 
 ### 7.12.1 Цвета для темной темы
+
 ```scss
 // Backgrounds
 $dark-bg: #18181b;
@@ -453,6 +493,7 @@ $dark-text-secondary: #a1a1aa;
 ```
 
 ### 7.12.2 Реализация
+
 ```css
 @media (prefers-color-scheme: dark) {
   :root {

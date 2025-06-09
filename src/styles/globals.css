@@ -1,0 +1,44 @@
+@import 'tailwindcss';
+@import './theme.css';
+
+@layer base {
+  body {
+    @apply bg-white text-gray-900;
+    font-feature-settings:
+      'rlig' 1,
+      'calt' 1;
+  }
+}
+
+@layer utilities {
+  /* Custom utilities for wine-specific styling */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .wine-card-shadow {
+    box-shadow:
+      0 4px 6px -1px rgba(169, 79, 92, 0.1),
+      0 2px 4px -1px rgba(169, 79, 92, 0.06);
+  }
+
+  .gold-shimmer {
+    background: linear-gradient(
+      105deg,
+      transparent 40%,
+      rgba(212, 175, 55, 0.7) 50%,
+      transparent 60%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+}

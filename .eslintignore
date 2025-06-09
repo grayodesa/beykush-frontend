@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Production
+.next/
+out/
+build/
+
+# Generated
+src/lib/graphql/__generated__/
+
+# Config files
+*.config.js
+*.config.ts
+.eslintrc.js
+.prettierrc.js
+.lintstagedrc.js
+codegen.ts
+
+# Misc
+public/
+*.md

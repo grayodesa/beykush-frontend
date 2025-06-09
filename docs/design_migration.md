@@ -3,6 +3,7 @@
 ## 📊 Анализ текущего дизайна
 
 ### Элементы страницы продукта:
+
 1. **Шапка** - логотип, навигация, корзина, переключатель языка
 2. **Хлебные крошки** - навигационная цепочка
 3. **Галерея продукта** - основное изображение + миниатюры
@@ -20,6 +21,7 @@
 7. **Подвал** - контакты, ссылки, копирайт
 
 ### Цветовая схема:
+
 - **Основной фиолетовый**: #7c3aed (кнопка "Додати в кошик")
 - **Бургундский**: #a94f5c (элементы навигации при наведении)
 - **Серый текст**: #6b7280
@@ -37,9 +39,9 @@ add_action('init', function() {
             'limit' => -1,
             'status' => 'publish',
         ]);
-        
+
         $export_data = [];
-        
+
         foreach ($products as $product) {
             $export_data[] = [
                 'id' => $product->get_id(),
@@ -59,7 +61,7 @@ add_action('init', function() {
                 'meta_data' => $product->get_meta_data(),
             ];
         }
-        
+
         header('Content-Type: application/json');
         echo json_encode($export_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         exit;
@@ -69,15 +71,15 @@ add_action('init', function() {
 
 ### Шаг 2: Соответствие компонентов Elementor → Next.js
 
-| Elementor Widget | Next.js Component | Расположение |
-|------------------|-------------------|--------------|
-| Site Header | `components/layout/Header.tsx` | Глобальный layout |
-| Breadcrumbs | `components/ui/Breadcrumbs.tsx` | Страницы |
-| Product Gallery | `components/products/ProductGallery.tsx` | Страница продукта |
-| Add to Cart Form | `components/products/AddToCartForm.tsx` | Страница продукта |
-| Tabs | `components/ui/Tabs.tsx` | Переиспользуемый |
-| Products Grid | `components/products/ProductGrid.tsx` | Каталог/рекомендации |
-| Footer | `components/layout/Footer.tsx` | Глобальный layout |
+| Elementor Widget | Next.js Component                        | Расположение         |
+| ---------------- | ---------------------------------------- | -------------------- |
+| Site Header      | `components/layout/Header.tsx`           | Глобальный layout    |
+| Breadcrumbs      | `components/ui/Breadcrumbs.tsx`          | Страницы             |
+| Product Gallery  | `components/products/ProductGallery.tsx` | Страница продукта    |
+| Add to Cart Form | `components/products/AddToCartForm.tsx`  | Страница продукта    |
+| Tabs             | `components/ui/Tabs.tsx`                 | Переиспользуемый     |
+| Products Grid    | `components/products/ProductGrid.tsx`    | Каталог/рекомендации |
+| Footer           | `components/layout/Footer.tsx`           | Глобальный layout    |
 
 ### Шаг 3: Создание переиспользуемых компонентов
 
@@ -90,14 +92,14 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Логотип */}
           <Link href="/" className="flex items-center">
-            <Image 
-              src="/logo-beykush.svg" 
-              alt="Beykush Winery" 
-              width={120} 
+            <Image
+              src="/logo-beykush.svg"
+              alt="Beykush Winery"
+              width={120}
               height={40}
             />
           </Link>
-          
+
           {/* Навигация */}
           <nav className="hidden md:flex space-x-8">
             <Link href="/about" className="hover:text-beykush-gold transition-colors">
@@ -110,7 +112,7 @@ export default function Header() {
               МАГАЗИН
             </Link>
           </nav>
-          
+
           {/* Действия */}
           <div className="flex items-center space-x-4">
             <LanguageSwitcher />
@@ -134,7 +136,7 @@ interface TabsProps {
 
 export default function Tabs({ tabs, defaultTab }: TabsProps) {
   const [activeTab, setActiveTab] = useState(defaultTab || tabs[0].id);
-  
+
   return (
     <div>
       {/* Навигация табов */}
@@ -157,7 +159,7 @@ export default function Tabs({ tabs, defaultTab }: TabsProps) {
           ))}
         </nav>
       </div>
-      
+
       {/* Контент табов */}
       <div className="py-8">
         {tabs.find(tab => tab.id === activeTab)?.content}
@@ -170,6 +172,7 @@ export default function Tabs({ tabs, defaultTab }: TabsProps) {
 ### Шаг 4: Оптимизация для производительности
 
 #### 1. Lazy Loading компонентов
+
 ```typescript
 // Динамический импорт тяжелых компонентов
 const ProductGallery = dynamic(() => import('./ProductGallery'), {
@@ -184,6 +187,7 @@ const ReviewsList = dynamic(() => import('./ReviewsList'), {
 ```
 
 #### 2. Оптимизация изображений
+
 ```typescript
 // next.config.js
 module.exports = {
@@ -193,7 +197,7 @@ module.exports = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     formats: ['image/avif', 'image/webp'],
-    
+
     // Кастомный загрузчик для WordPress
     loader: 'custom',
     loaderFile: './lib/image-loader.js',
@@ -206,12 +210,13 @@ export default function wpImageLoader({ src, width, quality }) {
   const params = new URLSearchParams();
   params.set('w', width.toString());
   params.set('q', (quality || 85).toString());
-  
+
   return `${src}?${params.toString()}`;
 }
 ```
 
 #### 3. Предзагрузка критических ресурсов
+
 ```typescript
 // app/layout.tsx
 export default function RootLayout({ children }) {
@@ -226,7 +231,7 @@ export default function RootLayout({ children }) {
           type="font/woff2"
           crossOrigin="anonymous"
         />
-        
+
         {/* Предзагрузка критических стилей */}
         <link
           rel="preload"
@@ -243,11 +248,12 @@ export default function RootLayout({ children }) {
 ### Шаг 5: Миграция интерактивных элементов
 
 #### Фильтры продуктов
+
 ```typescript
 // components/shop/ProductFilters.tsx
-export default function ProductFilters({ 
-  categories, 
-  onFilterChange 
+export default function ProductFilters({
+  categories,
+  onFilterChange
 }: ProductFiltersProps) {
   const [filters, setFilters] = useState({
     category: '',
@@ -255,13 +261,13 @@ export default function ProductFilters({
     inStock: true,
     sortBy: 'date',
   });
-  
+
   const handleFilterChange = (key: string, value: any) => {
     const newFilters = { ...filters, [key]: value };
     setFilters(newFilters);
     onFilterChange(newFilters);
   };
-  
+
   return (
     <aside className="space-y-6">
       {/* Категории */}
@@ -288,7 +294,7 @@ export default function ProductFilters({
           ))}
         </RadioGroup>
       </div>
-      
+
       {/* Ценовой диапазон */}
       <div>
         <h3 className="font-semibold mb-3">Ціна</h3>
@@ -305,6 +311,7 @@ export default function ProductFilters({
 ```
 
 #### Анимации при скролле
+
 ```typescript
 // hooks/useScrollAnimation.ts
 export function useScrollAnimation() {
@@ -320,11 +327,11 @@ export function useScrollAnimation() {
       },
       { threshold: 0.1 }
     );
-    
+
     document.querySelectorAll('.scroll-animate').forEach((el) => {
       observer.observe(el);
     });
-    
+
     return () => observer.disconnect();
   }, []);
 }
@@ -349,8 +356,8 @@ export function generateProductSchema(product: Product) {
       '@type': 'Offer',
       price: product.price,
       priceCurrency: 'UAH',
-      availability: product.stockStatus === 'IN_STOCK' 
-        ? 'https://schema.org/InStock' 
+      availability: product.stockStatus === 'IN_STOCK'
+        ? 'https://schema.org/InStock'
         : 'https://schema.org/OutOfStock',
       seller: {
         '@type': 'Organization',
@@ -368,7 +375,7 @@ export function generateProductSchema(product: Product) {
 // В компоненте страницы продукта
 export default function ProductPage({ product }) {
   const structuredData = generateProductSchema(product);
-  
+
   return (
     <>
       <script
@@ -386,12 +393,14 @@ export default function ProductPage({ product }) {
 ## 📋 Чек-лист миграции дизайна
 
 ### Подготовка
+
 - [ ] Экспортировать все изображения в высоком разрешении
 - [ ] Документировать все цвета, шрифты, отступы
 - [ ] Создать библиотеку UI компонентов
 - [ ] Настроить систему дизайн-токенов
 
 ### Компоненты
+
 - [ ] Header с навигацией
 - [ ] Footer с контактами
 - [ ] Карточка продукта
@@ -403,6 +412,7 @@ export default function ProductPage({ product }) {
 - [ ] Форма оформления заказа
 
 ### Страницы
+
 - [ ] Главная
 - [ ] Каталог продуктов
 - [ ] Страница продукта
@@ -413,6 +423,7 @@ export default function ProductPage({ product }) {
 - [ ] Винный клуб
 
 ### Оптимизация
+
 - [ ] Настроить lazy loading
 - [ ] Оптимизировать изображения
 - [ ] Минимизировать CSS/JS
@@ -420,6 +431,7 @@ export default function ProductPage({ product }) {
 - [ ] Проверить Core Web Vitals
 
 ### Тестирование
+
 - [ ] Проверить на всех устройствах
 - [ ] Тестировать скорость загрузки
 - [ ] Проверить SEO метрики
@@ -428,6 +440,7 @@ export default function ProductPage({ product }) {
 ## 🎯 Результат
 
 После миграции вы получите:
+
 - **Скорость загрузки**: < 1 секунды
 - **Lighthouse Score**: 95+
 - **Полный контроль** над дизайном

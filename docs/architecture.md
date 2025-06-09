@@ -2,14 +2,18 @@
 
 ## 📋 Обзор решения
 
-Предлагаемая архитектура позволит значительно ускорить работу сайта, сохранив при этом все функциональные возможности WordPress и WooCommerce для управления контентом и магазином.
+Предлагаемая архитектура позволит значительно ускорить работу сайта, сохранив
+при этом все функциональные возможности WordPress и WooCommerce для управления
+контентом и магазином.
 
 ### Основные преимущества:
+
 - **Скорость**: Статическая генерация страниц, кеширование на CDN
 - **SEO**: Полная оптимизация для поисковых систем
 - **Масштабируемость**: Фронтенд и бэкенд независимы друг от друга
 - **Гибкость дизайна**: Полный контроль над UI/UX
-- **Сохранение функциональности**: Все возможности WooCommerce остаются доступными
+- **Сохранение функциональности**: Все возможности WooCommerce остаются
+  доступными
 
 ## 🏗️ Архитектура системы
 
@@ -56,6 +60,7 @@
 ## 🛠️ Технологический стек
 
 ### Backend (WordPress)
+
 - **WordPress** - основная CMS
 - **WooCommerce** - управление магазином
 - **WPGraphQL** - GraphQL API для WordPress
@@ -64,6 +69,7 @@
 - **Advanced Custom Fields + WPGraphQL for ACF** - кастомные поля
 
 ### Frontend (Next.js)
+
 - **Next.js 15** - React фреймворк с App Router
 - **TypeScript** - типизация кода
 - **Apollo Client** - GraphQL клиент
@@ -167,10 +173,10 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : "",
+      authorization: token ? `Bearer ${token}` : '',
       'woocommerce-session': `Session ${token}`,
-    }
-  }
+    },
+  };
 });
 
 export const apolloClient = new ApolloClient({
@@ -296,37 +302,42 @@ export const useCartStore = create<CartStore>()(
   persist(
     (set, get) => ({
       items: [],
-      
-      addItem: (item) => set((state) => {
-        const existingItem = state.items.find(i => i.productId === item.productId);
-        if (existingItem) {
-          return {
-            items: state.items.map(i =>
-              i.productId === item.productId
-                ? { ...i, quantity: i.quantity + item.quantity }
-                : i
-            ),
-          };
-        }
-        return { items: [...state.items, item] };
-      }),
-      
-      removeItem: (productId) => set((state) => ({
-        items: state.items.filter(i => i.productId !== productId),
-      })),
-      
-      updateQuantity: (productId, quantity) => set((state) => ({
-        items: state.items.map(i =>
-          i.productId === productId ? { ...i, quantity } : i
-        ),
-      })),
-      
+
+      addItem: (item) =>
+        set((state) => {
+          const existingItem = state.items.find(
+            (i) => i.productId === item.productId
+          );
+          if (existingItem) {
+            return {
+              items: state.items.map((i) =>
+                i.productId === item.productId
+                  ? { ...i, quantity: i.quantity + item.quantity }
+                  : i
+              ),
+            };
+          }
+          return { items: [...state.items, item] };
+        }),
+
+      removeItem: (productId) =>
+        set((state) => ({
+          items: state.items.filter((i) => i.productId !== productId),
+        })),
+
+      updateQuantity: (productId, quantity) =>
+        set((state) => ({
+          items: state.items.map((i) =>
+            i.productId === productId ? { ...i, quantity } : i
+          ),
+        })),
+
       clearCart: () => set({ items: [] }),
-      
+
       getTotalPrice: () => {
         const { items } = get();
         return items.reduce((total, item) => {
-          return total + (parseFloat(item.price) * item.quantity);
+          return total + parseFloat(item.price) * item.quantity;
         }, 0);
       },
     }),
@@ -365,10 +376,10 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function ProductPage({ 
-  params 
-}: { 
-  params: { slug: string } 
+export default async function ProductPage({
+  params
+}: {
+  params: { slug: string }
 }) {
   const { data } = await apolloClient.query({
     query: GET_PRODUCT_BY_SLUG,
@@ -407,10 +418,10 @@ export const CREATE_ORDER = gql`
 export function CheckoutForm() {
   const [createOrder] = useMutation(CREATE_ORDER);
   const cartItems = useCartStore((state) => state.items);
-  
+
   const handleSubmit = async (formData: CheckoutFormData) => {
     try {
-      const lineItems = cartItems.map(item => ({
+      const lineItems = cartItems.map((item) => ({
         productId: item.productId,
         quantity: item.quantity,
       }));
@@ -465,12 +476,12 @@ import { revalidatePath } from 'next/cache';
 
 export async function POST(request: Request) {
   const { path, secret } = await request.json();
-  
+
   // Проверка секретного ключа
   if (secret !== process.env.REVALIDATION_SECRET) {
     return Response.json({ message: 'Invalid secret' }, { status: 401 });
   }
-  
+
   revalidatePath(path);
   return Response.json({ revalidated: true });
 }
@@ -512,11 +523,11 @@ export const cache = new InMemoryCache({
           merge(existing, incoming, { args }) {
             const offset = args?.after ? existing?.nodes.length : 0;
             const merged = existing ? existing.nodes.slice(0) : [];
-            
+
             for (let i = 0; i < incoming.nodes.length; ++i) {
               merged[offset + i] = incoming.nodes[i];
             }
-            
+
             return {
               ...incoming,
               nodes: merged,
@@ -543,24 +554,21 @@ export function middleware(request: NextRequest) {
   // Защита админских роутов
   if (request.nextUrl.pathname.startsWith('/api/admin')) {
     const token = request.headers.get('authorization')?.split(' ')[1];
-    
+
     if (!token) {
       return NextResponse.json(
         { error: 'Authentication required' },
         { status: 401 }
       );
     }
-    
+
     try {
       verify(token, process.env.JWT_SECRET!);
     } catch {
-      return NextResponse.json(
-        { error: 'Invalid token' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
     }
   }
-  
+
   return NextResponse.next();
 }
 ```
@@ -690,12 +698,14 @@ export function reportWebVitals(metric: any) {
 ## 📋 Чек-лист для миграции
 
 ### Phase 1: Подготовка (1-2 недели)
+
 - [ ] Установка и настройка WPGraphQL плагинов
 - [ ] Создание GraphQL схемы для кастомных полей
 - [ ] Настройка JWT авторизации
 - [ ] Тестирование GraphQL API
 
 ### Phase 2: Разработка фронтенда (4-6 недель)
+
 - [ ] Инициализация Next.js проекта
 - [ ] Создание базовой структуры компонентов
 - [ ] Реализация страниц продуктов
@@ -703,18 +713,21 @@ export function reportWebVitals(metric: any) {
 - [ ] Адаптивный дизайн
 
 ### Phase 3: Интеграция (2-3 недели)
+
 - [ ] Подключение платежных систем
 - [ ] Настройка доставки
 - [ ] Email уведомления
 - [ ] Личный кабинет пользователя
 
 ### Phase 4: Тестирование (1-2 недели)
+
 - [ ] Функциональное тестирование
 - [ ] Нагрузочное тестирование
 - [ ] SEO аудит
 - [ ] Проверка безопасности
 
 ### Phase 5: Запуск (1 неделя)
+
 - [ ] Настройка хостинга (Vercel/Netlify)
 - [ ] Конфигурация CDN
 - [ ] DNS настройки
@@ -731,6 +744,7 @@ export function reportWebVitals(metric: any) {
 ## 🆘 Поддержка и обслуживание
 
 ### Регулярные задачи:
+
 - Обновление зависимостей (ежемесячно)
 - Проверка безопасности (еженедельно)
 - Оптимизация изображений (по необходимости)
@@ -738,10 +752,12 @@ export function reportWebVitals(metric: any) {
 - Резервное копирование (ежедневно)
 
 ### Мониторинг ключевых метрик:
+
 - Core Web Vitals (LCP < 2.5s, FID < 100ms, CLS < 0.1)
 - Конверсия в корзину (> 3%)
 - Конверсия в заказ (> 1.5%)
 - Скорость загрузки страниц (< 3s)
 - Uptime (> 99.9%)
 
-Это решение обеспечит максимальную производительность сайта при сохранении всей функциональности WordPress и WooCommerce для управления контентом и заказами.
+Это решение обеспечит максимальную производительность сайта при сохранении всей
+функциональности WordPress и WooCommerce для управления контентом и заказами.

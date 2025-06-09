@@ -388,13 +388,7 @@ export const GET_CUSTOMER_ORDERS = gql`
 // Добавление товара в корзину
 export const ADD_TO_CART = gql`
   mutation AddToCart($productId: Int!, $quantity: Int = 1, $variationId: Int) {
-    addToCart(
-      input: {
-        productId: $productId
-        quantity: $quantity
-        variationId: $variationId
-      }
-    ) {
+    addToCart(input: { productId: $productId, quantity: $quantity, variationId: $variationId }) {
       cartItem {
         key
         quantity
@@ -566,9 +560,7 @@ export const SEND_PASSWORD_RESET_EMAIL = gql`
 // Обновление пароля
 export const RESET_PASSWORD = gql`
   mutation ResetPassword($key: String!, $login: String!, $password: String!) {
-    resetUserPassword(
-      input: { key: $key, login: $login, password: $password }
-    ) {
+    resetUserPassword(input: { key: $key, login: $login, password: $password }) {
       user {
         id
         email

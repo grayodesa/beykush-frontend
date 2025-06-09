@@ -3,6 +3,7 @@
 ## 2.1 Frontend технологии
 
 ### Основной фреймворк
+
 - **Next.js 15.0+**
   - App Router для современной архитектуры
   - Server Components для оптимизации
@@ -10,12 +11,14 @@
   - API Routes для серверной логики
 
 ### Язык программирования
+
 - **TypeScript 5.0+**
   - Строгая типизация
   - Улучшенный developer experience
   - Меньше runtime ошибок
 
 ### Стилизация
+
 - **Tailwind CSS 3.4+**
   - Utility-first подход
   - Кастомная дизайн-система
@@ -23,6 +26,7 @@
   - CSS Modules для изолированных стилей
 
 ### State Management
+
 - **Zustand**
   - Управление корзиной
   - Локальные настройки пользователя
@@ -33,6 +37,7 @@
   - Кеширование GraphQL запросов
 
 ### Работа с данными
+
 - **Apollo Client 3.8+**
   - GraphQL запросы и мутации
   - Оптимистичные обновления
@@ -42,6 +47,7 @@
   - Real-time обновления
 
 ### Формы и валидация
+
 - **React Hook Form**
   - Производительные формы
   - Минимальные ре-рендеры
@@ -50,6 +56,7 @@
   - Type inference
 
 ### UI библиотеки
+
 - **Radix UI**
   - Доступные компоненты
   - Headless подход
@@ -60,6 +67,7 @@
   - Иконки
 
 ### Утилиты
+
 - **date-fns**
   - Работа с датами
   - Локализация
@@ -72,6 +80,7 @@
 ## 2.2 Backend технологии (существующие)
 
 ### CMS и E-commerce
+
 - **WordPress 6.4+**
   - Headless CMS
   - Управление контентом
@@ -81,6 +90,7 @@
   - Интеграции доставки
 
 ### GraphQL API
+
 - **WPGraphQL 1.19+**
   - Основной GraphQL endpoint
 - **WPGraphQL for WooCommerce 0.19+**
@@ -91,6 +101,7 @@
   - Кастомные поля
 
 ### Дополнительные плагины
+
 - **Advanced Custom Fields Pro**
   - Кастомные поля для вин
 - **WPML или Polylang**
@@ -101,6 +112,7 @@
 ## 2.3 Инфраструктура
 
 ### Хостинг Frontend
+
 - **Vercel**
   - Оптимизация для Next.js
   - Edge Functions
@@ -108,6 +120,7 @@
   - Web Vitals monitoring
 
 ### CDN и оптимизация
+
 - **Vercel Edge Network**
   - Глобальная CDN
   - Image Optimization API
@@ -115,10 +128,12 @@
   - Дополнительная обработка изображений
 
 ### База данных
+
 - **WordPress MySQL** (существующая)
 - **Redis** (для кеширования сессий)
 
 ### Email сервисы
+
 - **SendGrid/Mailgun**
   - Транзакционные email
   - Email кампании
@@ -126,12 +141,14 @@
 ## 2.4 DevOps и инструменты
 
 ### Version Control
+
 - **Git + GitHub**
   - Монорепозиторий подход
   - Conventional Commits
   - Branch protection
 
 ### CI/CD
+
 - **GitHub Actions**
   - Автоматические тесты
   - Preview deployments
@@ -140,6 +157,7 @@
   - Локальное тестирование
 
 ### Качество кода
+
 - **ESLint**
   - Next.js config
   - Custom rules
@@ -151,6 +169,7 @@
   - Commit message validation
 
 ### Тестирование
+
 - **Jest**
   - Unit tests
   - Integration tests
@@ -162,6 +181,7 @@
   - Performance tests
 
 ### Мониторинг
+
 - **Sentry**
   - Error tracking
   - Performance monitoring
@@ -172,6 +192,7 @@
   - Session replay
 
 ### Документация
+
 - **Storybook**
   - Компонентная документация
   - Visual testing
@@ -181,6 +202,7 @@
 ## 2.5 Внешние сервисы и API
 
 ### Платежные системы
+
 - **LiqPay API**
   - Основной платежный провайдер
 - **Приват24 API**
@@ -189,18 +211,21 @@
   - Международные платежи
 
 ### Доставка
+
 - **Нова Пошта API**
   - Основная служба доставки
 - **УкрПошта API**
   - Альтернативная доставка
 
 ### Аналитика и маркетинг
+
 - **Google Analytics 4**
 - **Google Tag Manager**
 - **Facebook Pixel**
 - **Hotjar** (тепловые карты)
 
 ### Безопасность
+
 - **Cloudflare** (опционально)
   - DDoS защита
   - WAF
@@ -209,16 +234,19 @@
 ## 2.6 Требования к окружению
 
 ### Development
+
 - Node.js 20.x LTS
 - npm/yarn/pnpm
 - Docker (для локального WordPress)
 
 ### Production
+
 - Node.js 20.x
 - HTTPS обязательно
 - HTTP/2 поддержка
 
 ### Браузеры
+
 - Chrome 90+
 - Firefox 88+
 - Safari 14+
