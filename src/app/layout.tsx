@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
 import '@/styles/globals.css';
 import { ApolloWrapper } from '@/lib/apollo/apollo-wrapper';
+import { I18nProvider } from '@/lib/i18n';
 
 const inter = Inter({
   subsets: ['latin', 'cyrillic'],
@@ -64,7 +65,9 @@ export default function RootLayout({
   return (
     <html lang="uk" className={`${inter.variable} ${playfair.variable}`}>
       <body className={inter.className}>
-        <ApolloWrapper>{children}</ApolloWrapper>
+        <I18nProvider>
+          <ApolloWrapper>{children}</ApolloWrapper>
+        </I18nProvider>
       </body>
     </html>
   );
