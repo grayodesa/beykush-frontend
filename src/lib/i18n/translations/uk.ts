@@ -61,6 +61,10 @@ export const uk: TranslationKeys = {
     shipping: 'Доставка',
     tax: 'Податок',
     discount: 'Знижка',
+    featured: 'Рекомендовано',
+    quickView: 'Швидкий перегляд',
+    addToWishlist: 'Додати до списку бажань',
+    selectOptions: 'Вибрати опції',
   },
 
   cart: {

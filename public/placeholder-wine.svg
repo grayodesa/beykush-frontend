@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="600" viewBox="0 0 400 600">
+  <rect width="400" height="600" fill="#f5f5f5"/>
+  <g transform="translate(200, 300)">
+    <!-- Wine bottle outline -->
+    <path d="M-30,-200 L-30,-150 C-30,-140 -25,-130 -20,-120 L-20,-50 C-20,-30 -40,0 -50,50 L-50,150 C-50,180 -30,200 0,200 C30,200 50,180 50,150 L50,50 C40,0 20,-30 20,-50 L20,-120 C25,-130 30,-140 30,-150 L30,-200 Z" 
+          fill="#333" 
+          stroke="#222" 
+          stroke-width="2"/>
+    <!-- Cork -->
+    <rect x="-20" y="-220" width="40" height="30" fill="#8B4513" stroke="#654321" stroke-width="1"/>
+    <!-- Label -->
+    <rect x="-40" y="-50" width="80" height="120" fill="#a94f5c" opacity="0.9"/>
+    <text x="0" y="10" text-anchor="middle" fill="white" font-family="serif" font-size="24" font-weight="bold">BEYKUSH</text>
+    <text x="0" y="35" text-anchor="middle" fill="white" font-family="sans-serif" font-size="14">WINE</text>
+  </g>
+</svg>
