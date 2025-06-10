@@ -2,7 +2,15 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
-  variant?: 'primary' | 'success' | 'warning' | 'error' | 'wine-red' | 'wine-white' | 'wine-rose' | 'neutral';
+  variant?:
+    | 'primary'
+    | 'success'
+    | 'warning'
+    | 'error'
+    | 'wine-red'
+    | 'wine-white'
+    | 'wine-rose'
+    | 'neutral';
   size?: 'sm' | 'md';
   dot?: boolean;
   removable?: boolean;
@@ -38,10 +46,7 @@ export const Badge: React.FC<BadgeProps> = ({
   };
 
   return (
-    <span
-      className={cn(baseStyles, variants[variant], sizes[size], className)}
-      {...props}
-    >
+    <span className={cn(baseStyles, variants[variant], sizes[size], className)} {...props}>
       {dot && (
         <span
           className={cn(

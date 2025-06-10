@@ -2,10 +2,9 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { useTranslation } from '@/lib/i18n';
-import { Input } from '@/components/ui/Input';
-import { Button } from '@/components/ui/Button';
 
 export interface FooterLink {
   label: string;
@@ -37,21 +36,9 @@ export const Footer: React.FC<FooterProps> = ({
   socialLinks,
   className,
 }) => {
-  const [email, setEmail] = React.useState('');
-  const [isSubscribed, setIsSubscribed] = React.useState(false);
   const { t } = useTranslation();
 
-  // Use translated defaults if not provided
-  const title = newsletterTitle || t.footer.subscribe;
-  const description = newsletterDescription || t.footer.subscribeDescription;
-  const copyright = copyrightText || `© ${new Date().getFullYear()} Beykush Winery. All rights reserved.`;
-
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: Handle newsletter submission
-    setIsSubscribed(true);
-    setTimeout(() => setIsSubscribed(false), 3000);
-  };
+  const copyright = copyrightText || `© ${new Date().getFullYear()}, Вина Бейкуш`;
 
   const getSocialIcon = (platform: string) => {
     switch (platform) {
@@ -85,71 +72,104 @@ export const Footer: React.FC<FooterProps> = ({
   };
 
   return (
-    <footer className={cn('bg-gray-900 text-gray-300', className)}>
+    <footer className={cn('bg-footer-bg text-dark-gray', className)}>
       <div className="container mx-auto px-4 py-12 lg:py-16">
-        {/* Newsletter Section */}
-        <div className="mb-12 text-center max-w-2xl mx-auto">
-          <h3 className="text-2xl font-serif font-semibold text-white mb-3">
-            {title}
-          </h3>
-          <p className="mb-6">{description}</p>
-          <form onSubmit={handleNewsletterSubmit} className="flex gap-3 max-w-md mx-auto">
-            <Input
-              type="email"
-              placeholder={t.footer.enterEmail}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="flex-1"
-              aria-label="Email address"
-            />
-            <Button type="submit" variant="primary">
-              {isSubscribed ? t.footer.subscribed : t.footer.subscribe}
-            </Button>
-          </form>
-        </div>
 
-        {/* Links Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
-          {sections.map((section) => (
-            <div key={section.title}>
-              <h4 className="text-white font-semibold mb-4">{section.title}</h4>
-              <ul className="space-y-2">
-                {section.links.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      className="hover:text-white transition-colors duration-200"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+        {/* Three Column Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          {/* Left Column - For Users */}
+          <div>
+            <h4 className="text-dark-gray font-semibold mb-4 uppercase">ДЛЯ КОРИСТУВАЧА</h4>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/payment-delivery" className="text-medium-gray hover:text-rose-600 transition-colors duration-200">
+                  Оплата та доставка
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy" className="text-medium-gray hover:text-rose-600 transition-colors duration-200">
+                  Політика конфіденційності
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="text-medium-gray hover:text-rose-600 transition-colors duration-200">
+                  Угода користувача
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Center Column - Logo and Contact */}
+          <div className="text-center">
+            <Link href="/" className="inline-block mb-4">
+              <Image
+                src="/beykush-logo-white.png"
+                alt="Beykush"
+                width={100}
+                height={100}
+                className="h-[100px] w-auto mx-auto filter invert"
+              />
+            </Link>
+            <div className="space-y-2 text-sm">
+              <p>вул.Приморська 73/2, с.Черноморка,</p>
+              <p>Очаківський р-н, Миколаївська обл., Україна</p>
+              <p>
+                <a href="mailto:info@beykushwinery.com" className="hover:text-rose-600 transition-colors">
+                  info@beykushwinery.com
+                </a>
+              </p>
+              <p>
+                <a href="tel:+380500695777" className="hover:text-rose-600 transition-colors">
+                  +38 (050) 069-57-77
+                </a>
+              </p>
             </div>
-          ))}
+          </div>
+
+          {/* Right Column - About Us */}
+          <div>
+            <h4 className="text-dark-gray font-semibold mb-4 uppercase">ПРО НАС</h4>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/contact" className="text-medium-gray hover:text-rose-600 transition-colors duration-200">
+                  Контакти
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="text-medium-gray hover:text-rose-600 transition-colors duration-200">
+                  Про нас
+                </Link>
+              </li>
+              <li>
+                <Link href="/blog" className="text-medium-gray hover:text-rose-600 transition-colors duration-200">
+                  Блог
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
 
         {/* Bottom Section */}
-        <div className="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+        <div className="pt-8 border-t border-gray-300 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <p className="text-sm">{copyright}</p>
-          
-          {socialLinks && (
-            <div className="flex space-x-4">
-              {socialLinks.map((link) => (
-                <a
-                  key={link.platform}
-                  href={link.href}
-                  className="text-gray-400 hover:text-white transition-colors duration-200"
-                  aria-label={`Follow us on ${link.platform}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {getSocialIcon(link.platform)}
-                </a>
-              ))}
-            </div>
-          )}
+
+          {/* Payment Icons */}
+          <div className="flex items-center gap-4">
+            <Image
+              src="/visa-logo.png"
+              alt="Visa"
+              width={50}
+              height={30}
+              className="h-6 w-auto"
+            />
+            <Image
+              src="/mastercard-logo.png"
+              alt="Mastercard"
+              width={40}
+              height={30}
+              className="h-6 w-auto"
+            />
+          </div>
         </div>
       </div>
     </footer>

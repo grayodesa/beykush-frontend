@@ -170,9 +170,7 @@ export const Modal: React.FC<ModalProps> = ({
           )}
 
           {/* Body */}
-          <div className="px-6 py-4 max-h-[70vh] overflow-y-auto scrollbar-custom">
-            {children}
-          </div>
+          <div className="px-6 py-4 max-h-[70vh] overflow-y-auto scrollbar-custom">{children}</div>
 
           {/* Footer */}
           {footer && (

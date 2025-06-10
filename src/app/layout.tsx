@@ -3,6 +3,7 @@ import { Inter, Playfair_Display } from 'next/font/google';
 import '@/styles/globals.css';
 import { ApolloWrapper } from '@/lib/apollo/apollo-wrapper';
 import { I18nProvider } from '@/lib/i18n';
+import { HeaderWrapper, FooterWrapper } from '@/components/layout';
 
 const inter = Inter({
   subsets: ['latin', 'cyrillic'],
@@ -66,7 +67,13 @@ export default function RootLayout({
     <html lang="uk" className={`${inter.variable} ${playfair.variable}`}>
       <body className={inter.className}>
         <I18nProvider>
-          <ApolloWrapper>{children}</ApolloWrapper>
+          <ApolloWrapper>
+            <div className="min-h-screen flex flex-col">
+              <HeaderWrapper />
+              <main className="flex-grow">{children}</main>
+              <FooterWrapper />
+            </div>
+          </ApolloWrapper>
         </I18nProvider>
       </body>
     </html>

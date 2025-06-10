@@ -1,16 +1,16 @@
 @theme {
-  /* Brand Colors */
-  --color-purple-50: #f5f3ff;
-  --color-purple-100: #ede9fe;
-  --color-purple-200: #ddd6fe;
-  --color-purple-300: #c4b5fd;
-  --color-purple-400: #a78bfa;
-  --color-purple-500: #8b5cf6;
-  --color-purple-600: #7c3aed; /* Primary brand color */
-  --color-purple-700: #6d28d9;
-  --color-purple-800: #5b21b6;
-  --color-purple-900: #4c1d95;
-  --color-purple-950: #3b0764;
+  /* Brand Colors - WordPress Exact Colors */
+  --color-rose-50: #fef1f3;
+  --color-rose-100: #fde3e6;
+  --color-rose-200: #fcc7ce;
+  --color-rose-300: #f99aaa;
+  --color-rose-400: #f46880;
+  --color-rose-500: #bd515f; /* Primary brand color - WordPress header */
+  --color-rose-600: #cc3366; /* Secondary pink */
+  --color-rose-700: #b73148;
+  --color-rose-800: #9a2a3f;
+  --color-rose-900: #802638;
+  --color-rose-950: #47101b;
 
   --color-burgundy-50: #fdf2f4;
   --color-burgundy-100: #fce7ea;
@@ -42,6 +42,14 @@
   --color-wine-white: #f3e5ab;
   --color-wine-rose: #f4c2c2;
   --color-wine-sparkling: #f7e7ce;
+
+  /* WordPress Additional Colors */
+  --color-dark-gray: #333333; /* Text and buttons */
+  --color-medium-gray: #69727d; /* Secondary text */
+  --color-light-gray: #ababab; /* Muted text */
+  --color-footer-bg: #f6f2ef; /* Footer background */
+  --color-dark-footer: #292929; /* Dark footer */
+  --color-cart-badge: #d9534f; /* Cart badge */
 
   /* Font families */
   --font-family-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;

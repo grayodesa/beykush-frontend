@@ -27,7 +27,7 @@ export const LOGIN = gql`
 
 export const REGISTER_CUSTOMER = gql`
   ${CUSTOMER_FIELDS}
-  
+
   mutation RegisterCustomer($input: RegisterCustomerInput!) {
     registerCustomer(input: $input) {
       customer {
@@ -68,7 +68,7 @@ export const SEND_PASSWORD_RESET_EMAIL = gql`
 
 export const GET_VIEWER = gql`
   ${CUSTOMER_FIELDS}
-  
+
   query GetViewer {
     viewer {
       id

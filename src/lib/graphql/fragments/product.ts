@@ -40,14 +40,6 @@ export const PRODUCT_FIELDS = gql`
         slug
       }
     }
-    attributes {
-      nodes {
-        id
-        name
-        options
-        variation
-      }
-    }
   }
 `;
 
@@ -57,8 +49,8 @@ export const SIMPLE_PRODUCT_FIELDS = gql`
     regularPrice
     salePrice
     onSale
-    stockStatus
     stockQuantity
+    stockStatus
     manageStock
     soldIndividually
   }
@@ -70,6 +62,7 @@ export const VARIABLE_PRODUCT_FIELDS = gql`
     regularPrice
     salePrice
     onSale
+    stockQuantity
     stockStatus
     manageStock
     soldIndividually
@@ -85,16 +78,9 @@ export const PRODUCT_VARIATION_FIELDS = gql`
     regularPrice
     salePrice
     onSale
-    stockStatus
     stockQuantity
+    stockStatus
     manageStock
-    attributes {
-      nodes {
-        id
-        name
-        value
-      }
-    }
     image {
       id
       sourceUrl

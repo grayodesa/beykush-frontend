@@ -9,14 +9,7 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
   (
-    {
-      variant = 'default',
-      padding = 'md',
-      hoverable = false,
-      className,
-      children,
-      ...props
-    },
+    { variant = 'default', padding = 'md', hoverable = false, className, children, ...props },
     ref
   ) => {
     const baseStyles = 'bg-white rounded-xl overflow-hidden';
@@ -58,12 +51,7 @@ Card.displayName = 'Card';
 export const CardHeader: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   className,
   ...props
-}) => (
-  <div
-    className={cn('px-6 py-4 border-b border-gray-200', className)}
-    {...props}
-  />
-);
+}) => <div className={cn('px-6 py-4 border-b border-gray-200', className)} {...props} />;
 
 CardHeader.displayName = 'CardHeader';
 
@@ -77,11 +65,6 @@ CardBody.displayName = 'CardBody';
 export const CardFooter: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   className,
   ...props
-}) => (
-  <div
-    className={cn('px-6 py-4 border-t border-gray-200 bg-gray-50', className)}
-    {...props}
-  />
-);
+}) => <div className={cn('px-6 py-4 border-t border-gray-200 bg-gray-50', className)} {...props} />;
 
 CardFooter.displayName = 'CardFooter';

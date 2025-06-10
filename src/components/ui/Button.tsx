@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'burgundy' | 'gold' | 'ghost' | 'danger';
+  variant?: 'primary' | 'secondary' | 'burgundy' | 'gold' | 'ghost' | 'danger' | 'dark';
   size?: 'sm' | 'md' | 'lg';
   fullWidth?: boolean;
   loading?: boolean;
@@ -35,8 +35,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const variants = {
       primary: `
-        bg-purple-600 text-white hover:bg-purple-700 active:bg-purple-800
-        focus-visible:ring-purple-600 shadow-sm hover:shadow-md
+        bg-rose-500 text-white hover:bg-rose-600 active:bg-rose-700
+        focus-visible:ring-rose-500 shadow-sm hover:shadow-md
       `,
       secondary: `
         bg-white text-gray-900 border border-gray-300 hover:bg-gray-50
@@ -57,6 +57,10 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       danger: `
         bg-red-600 text-white hover:bg-red-700 active:bg-red-800
         focus-visible:ring-red-600 shadow-sm hover:shadow-md
+      `,
+      dark: `
+        bg-dark-gray text-white hover:bg-gray-800 active:bg-gray-900
+        focus-visible:ring-gray-700 shadow-sm hover:shadow-md
       `,
     };
 

@@ -58,12 +58,12 @@
 
   /* Focus styles */
   *:focus-visible {
-    @apply outline outline-2 outline-offset-2 outline-purple-600;
+    @apply outline outline-2 outline-offset-2 outline-rose-500;
   }
 
   /* Selection */
   ::selection {
-    @apply bg-purple-100 text-purple-900;
+    @apply bg-rose-100 text-rose-900;
   }
 }
 
@@ -93,8 +93,8 @@
   }
 
   .btn-primary {
-    @apply bg-purple-600 text-white hover:bg-purple-700 active:bg-purple-800
-           focus-visible:ring-purple-600 shadow-sm hover:shadow-md;
+    @apply bg-rose-500 text-white hover:bg-rose-600 active:bg-rose-700
+           focus-visible:ring-rose-500 shadow-sm hover:shadow-md;
   }
 
   .btn-secondary {
@@ -131,8 +131,8 @@
   .input {
     @apply w-full px-4 py-3 border border-gray-300 rounded-lg text-base
            transition-all duration-200 bg-white
-           focus:border-purple-600 focus:outline-none focus:ring-2
-           focus:ring-purple-600 focus:ring-opacity-20
+           focus:border-rose-500 focus:outline-none focus:ring-2
+           focus:ring-rose-500/20
            placeholder:text-gray-400;
   }
 
@@ -154,7 +154,7 @@
   }
 
   .badge-primary {
-    @apply bg-purple-100 text-purple-800;
+    @apply bg-rose-100 text-rose-800;
   }
 
   .badge-success {
@@ -226,7 +226,7 @@
 
   /* Text gradients */
   .text-gradient {
-    @apply bg-gradient-to-r from-purple-600 to-burgundy-600 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-rose-500 to-burgundy-600 bg-clip-text text-transparent;
   }
 
   .text-gradient-gold {
@@ -315,7 +315,7 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  
+
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
@@ -323,7 +323,7 @@
   /* Custom scrollbar */
   .scrollbar-custom {
     scrollbar-width: thin;
-    scrollbar-color: theme('colors.purple.600') theme('colors.gray.100');
+    scrollbar-color: theme('colors.rose.500') theme('colors.gray.100');
   }
 
   .scrollbar-custom::-webkit-scrollbar {
@@ -336,10 +336,10 @@
   }
 
   .scrollbar-custom::-webkit-scrollbar-thumb {
-    @apply bg-purple-600 rounded-full;
+    @apply bg-rose-500 rounded-full;
   }
 
   .scrollbar-custom::-webkit-scrollbar-thumb:hover {
-    @apply bg-purple-700;
+    @apply bg-rose-600;
   }
 }

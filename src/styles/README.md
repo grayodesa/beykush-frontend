@@ -1,6 +1,7 @@
 # Design System
 
-This directory contains the Beykush design system implementation using Tailwind CSS v4.
+This directory contains the Beykush design system implementation using Tailwind
+CSS v4.
 
 ## Files
 
@@ -25,6 +26,7 @@ This directory contains the Beykush design system implementation using Tailwind 
 ### Spacing
 
 Based on an 8px grid system:
+
 - `space-1`: 4px
 - `space-2`: 8px
 - `space-3`: 12px
@@ -37,14 +39,10 @@ Based on an 8px grid system:
 
 ```html
 <!-- Primary button -->
-<button class="btn btn-md btn-primary">
-  Shop Wines
-</button>
+<button class="btn btn-md btn-primary">Shop Wines</button>
 
 <!-- Secondary button -->
-<button class="btn btn-md btn-secondary">
-  Learn More
-</button>
+<button class="btn btn-md btn-secondary">Learn More</button>
 
 <!-- Sizes: btn-sm, btn-md, btn-lg -->
 <!-- Variants: btn-primary, btn-secondary, btn-burgundy, btn-gold, btn-ghost -->
@@ -67,12 +65,7 @@ Based on an 8px grid system:
 ```html
 <div>
   <label class="label" for="email">Email</label>
-  <input 
-    type="email" 
-    id="email" 
-    class="input" 
-    placeholder="your@email.com"
-  />
+  <input type="email" id="email" class="input" placeholder="your@email.com" />
   <p class="error-message">Please enter a valid email</p>
 </div>
 ```
@@ -123,6 +116,7 @@ Based on an 8px grid system:
 ## Responsive Design
 
 Breakpoints:
+
 - `xs`: 320px
 - `sm`: 640px
 - `md`: 768px
@@ -131,6 +125,7 @@ Breakpoints:
 - `2xl`: 1536px
 
 Example:
+
 ```html
 <div class="px-4 sm:px-6 lg:px-8">
   <!-- Responsive padding -->

@@ -1,23 +1,32 @@
 import { gql } from '@apollo/client';
-import { 
-  PRODUCT_FIELDS, 
-  SIMPLE_PRODUCT_FIELDS, 
+import {
+  PRODUCT_FIELDS,
+  SIMPLE_PRODUCT_FIELDS,
   VARIABLE_PRODUCT_FIELDS,
-  PRODUCT_VARIATION_FIELDS 
+  PRODUCT_VARIATION_FIELDS,
 } from '../fragments/product';
 
 export const GET_PRODUCTS = gql`
-  ${PRODUCT_FIELDS}
-  ${SIMPLE_PRODUCT_FIELDS}
-  ${VARIABLE_PRODUCT_FIELDS}
-  
   query GetProducts(
     $first: Int = 12
     $after: String
-    $where: RootQueryToProductConnectionWhereArgs
-    $orderby: [ProductsOrderbyInput]
+    $categoryIn: [String]
+    $orderBy: ProductsOrderByEnum = DATE
+    $order: OrderEnum = DESC
   ) {
-    products(first: $first, after: $after, where: $where, orderby: $orderby) {
+    products(
+      first: $first
+      after: $after
+      where: {
+        typeIn: [SIMPLE, VARIABLE]
+        categoryIn: $categoryIn
+        stockStatus: IN_STOCK
+        orderby: {
+          field: $orderBy
+          order: $order
+        }
+      }
+    ) {
       pageInfo {
         hasNextPage
         hasPreviousPage
@@ -25,17 +34,88 @@ export const GET_PRODUCTS = gql`
         endCursor
       }
       nodes {
-        ...ProductFields
+        __typename
         ... on SimpleProduct {
-          ...SimpleProductFields
-        }
-        ... on VariableProduct {
-          ...VariableProductFields
-          variations(first: 100) {
+          id
+          databaseId
+          name
+          slug
+          type
+          status
+          sku
+          description
+          shortDescription
+          featured
+          averageRating
+          reviewCount
+          image {
+            id
+            sourceUrl
+            altText
+          }
+          galleryImages {
             nodes {
-              ...ProductVariationFields
+              id
+              sourceUrl
+              altText
             }
           }
+          productCategories {
+            nodes {
+              id
+              name
+              slug
+            }
+          }
+          price
+          regularPrice
+          salePrice
+          onSale
+          stockQuantity
+          stockStatus
+          manageStock
+          soldIndividually
+        }
+        ... on VariableProduct {
+          id
+          databaseId
+          name
+          slug
+          type
+          status
+          sku
+          description
+          shortDescription
+          featured
+          averageRating
+          reviewCount
+          image {
+            id
+            sourceUrl
+            altText
+          }
+          galleryImages {
+            nodes {
+              id
+              sourceUrl
+              altText
+            }
+          }
+          productCategories {
+            nodes {
+              id
+              name
+              slug
+            }
+          }
+          price
+          regularPrice
+          salePrice
+          onSale
+          stockQuantity
+          stockStatus
+          manageStock
+          soldIndividually
         }
       }
     }
@@ -43,54 +123,183 @@ export const GET_PRODUCTS = gql`
 `;
 
 export const GET_PRODUCT_BY_SLUG = gql`
-  ${PRODUCT_FIELDS}
-  ${SIMPLE_PRODUCT_FIELDS}
-  ${VARIABLE_PRODUCT_FIELDS}
-  ${PRODUCT_VARIATION_FIELDS}
-  
   query GetProductBySlug($slug: ID!) {
     product(id: $slug, idType: SLUG) {
-      ...ProductFields
+      __typename
       ... on SimpleProduct {
-        ...SimpleProductFields
+        id
+        databaseId
+        name
+        slug
+        type
+        status
+        sku
+        description
+        shortDescription
+        featured
+        averageRating
+        reviewCount
+        image {
+          id
+          sourceUrl
+          altText
+        }
+        galleryImages {
+          nodes {
+            id
+            sourceUrl
+            altText
+          }
+        }
+        productCategories {
+          nodes {
+            id
+            name
+            slug
+          }
+        }
+        attributes {
+          nodes {
+            id
+            name
+            options
+          }
+        }
+        price
+        regularPrice
+        salePrice
+        onSale
+        stockQuantity
+        stockStatus
+        manageStock
+        soldIndividually
         relatedProducts(first: 4) {
           nodes {
-            ...ProductFields
+            __typename
             ... on SimpleProduct {
+              id
+              name
+              slug
               price
               onSale
+              image {
+                sourceUrl
+                altText
+              }
             }
             ... on VariableProduct {
+              id
+              name
+              slug
               price
               onSale
+              image {
+                sourceUrl
+                altText
+              }
             }
           }
         }
       }
       ... on VariableProduct {
-        ...VariableProductFields
-        variations(first: 100) {
+        id
+        databaseId
+        name
+        slug
+        type
+        status
+        sku
+        description
+        shortDescription
+        featured
+        averageRating
+        reviewCount
+        image {
+          id
+          sourceUrl
+          altText
+        }
+        galleryImages {
           nodes {
-            ...ProductVariationFields
+            id
+            sourceUrl
+            altText
           }
         }
-        defaultAttributes {
+        productCategories {
           nodes {
             id
             name
-            value
+            slug
+          }
+        }
+        attributes {
+          nodes {
+            id
+            name
+            options
+            variation
+          }
+        }
+        price
+        regularPrice
+        salePrice
+        onSale
+        stockQuantity
+        stockStatus
+        manageStock
+        soldIndividually
+        variations(first: 100) {
+          nodes {
+            id
+            databaseId
+            name
+            price
+            regularPrice
+            salePrice
+            onSale
+            stockQuantity
+            stockStatus
+            manageStock
+            image {
+              id
+              sourceUrl
+              altText
+            }
+            attributes {
+              nodes {
+                id
+                name
+                attributeId
+                label
+              }
+            }
           }
         }
         relatedProducts(first: 4) {
           nodes {
-            ...ProductFields
+            __typename
             ... on SimpleProduct {
+              id
+              name
+              slug
               price
               onSale
+              image {
+                sourceUrl
+                altText
+              }
             }
             ... on VariableProduct {
+              id
+              name
+              slug
               price
               onSale
+              image {
+                sourceUrl
+                altText
+              }
             }
           }
         }
@@ -127,19 +336,98 @@ export const GET_PRODUCT_CATEGORIES = gql`
 `;
 
 export const GET_FEATURED_PRODUCTS = gql`
-  ${PRODUCT_FIELDS}
-  ${SIMPLE_PRODUCT_FIELDS}
-  ${VARIABLE_PRODUCT_FIELDS}
-  
   query GetFeaturedProducts($first: Int = 8) {
-    products(first: $first, where: { featured: true, status: "publish" }) {
+    products(
+      first: $first
+      where: { 
+        featured: true
+        typeIn: [SIMPLE, VARIABLE]
+        stockStatus: IN_STOCK
+      }
+    ) {
       nodes {
-        ...ProductFields
+        __typename
         ... on SimpleProduct {
-          ...SimpleProductFields
+          id
+          databaseId
+          name
+          slug
+          type
+          status
+          sku
+          description
+          shortDescription
+          featured
+          averageRating
+          reviewCount
+          image {
+            id
+            sourceUrl
+            altText
+          }
+          galleryImages {
+            nodes {
+              id
+              sourceUrl
+              altText
+            }
+          }
+          productCategories {
+            nodes {
+              id
+              name
+              slug
+            }
+          }
+          price
+          regularPrice
+          salePrice
+          onSale
+          stockQuantity
+          stockStatus
+          manageStock
+          soldIndividually
         }
         ... on VariableProduct {
-          ...VariableProductFields
+          id
+          databaseId
+          name
+          slug
+          type
+          status
+          sku
+          description
+          shortDescription
+          featured
+          averageRating
+          reviewCount
+          image {
+            id
+            sourceUrl
+            altText
+          }
+          galleryImages {
+            nodes {
+              id
+              sourceUrl
+              altText
+            }
+          }
+          productCategories {
+            nodes {
+              id
+              name
+              slug
+            }
+          }
+          price
+          regularPrice
+          salePrice
+          onSale
+          stockQuantity
+          stockStatus
+          manageStock
+          soldIndividually
         }
       }
     }
@@ -147,19 +435,98 @@ export const GET_FEATURED_PRODUCTS = gql`
 `;
 
 export const SEARCH_PRODUCTS = gql`
-  ${PRODUCT_FIELDS}
-  ${SIMPLE_PRODUCT_FIELDS}
-  ${VARIABLE_PRODUCT_FIELDS}
-  
   query SearchProducts($search: String!, $first: Int = 12) {
-    products(first: $first, where: { search: $search, status: "publish" }) {
+    products(
+      first: $first
+      where: { 
+        search: $search
+        typeIn: [SIMPLE, VARIABLE]
+        stockStatus: IN_STOCK
+      }
+    ) {
       nodes {
-        ...ProductFields
+        __typename
         ... on SimpleProduct {
-          ...SimpleProductFields
+          id
+          databaseId
+          name
+          slug
+          type
+          status
+          sku
+          description
+          shortDescription
+          featured
+          averageRating
+          reviewCount
+          image {
+            id
+            sourceUrl
+            altText
+          }
+          galleryImages {
+            nodes {
+              id
+              sourceUrl
+              altText
+            }
+          }
+          productCategories {
+            nodes {
+              id
+              name
+              slug
+            }
+          }
+          price
+          regularPrice
+          salePrice
+          onSale
+          stockQuantity
+          stockStatus
+          manageStock
+          soldIndividually
         }
         ... on VariableProduct {
-          ...VariableProductFields
+          id
+          databaseId
+          name
+          slug
+          type
+          status
+          sku
+          description
+          shortDescription
+          featured
+          averageRating
+          reviewCount
+          image {
+            id
+            sourceUrl
+            altText
+          }
+          galleryImages {
+            nodes {
+              id
+              sourceUrl
+              altText
+            }
+          }
+          productCategories {
+            nodes {
+              id
+              name
+              slug
+            }
+          }
+          price
+          regularPrice
+          salePrice
+          onSale
+          stockQuantity
+          stockStatus
+          manageStock
+          soldIndividually
         }
       }
     }

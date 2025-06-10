@@ -11,7 +11,28 @@ const GRAPHQL_ENDPOINT =
 
 export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
   return new ApolloClient({
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+      typePolicies: {
+        Query: {
+          fields: {
+            products: {
+              keyArgs: ['where', 'search'],
+              merge(existing, incoming, { args }) {
+                if (!args?.after) {
+                  // This is the first page, replace everything
+                  return incoming;
+                }
+                // This is a subsequent page, merge the results
+                return {
+                  ...incoming,
+                  nodes: [...(existing?.nodes || []), ...incoming.nodes],
+                };
+              },
+            },
+          },
+        },
+      },
+    }),
     link: new HttpLink({
       // This needs to be an absolute url, as relative urls cannot be used in SSR
       uri: GRAPHQL_ENDPOINT,
@@ -21,5 +42,13 @@ export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
         cache: 'no-store', // Disable caching for now, can be changed later
       },
     }),
+    defaultOptions: {
+      watchQuery: {
+        errorPolicy: 'all',
+      },
+      query: {
+        errorPolicy: 'all',
+      },
+    },
   });
 });

@@ -22,19 +22,14 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
   showHome = true,
   homeLabel = 'Home',
 }) => {
-  const allItems = showHome
-    ? [{ label: homeLabel, href: '/' }, ...items]
-    : items;
+  const allItems = showHome ? [{ label: homeLabel, href: '/' }, ...items] : items;
 
   return (
-    <nav
-      aria-label="Breadcrumb"
-      className={cn('flex items-center space-x-2 text-sm', className)}
-    >
+    <nav aria-label="Breadcrumb" className={cn('flex items-center space-x-2 text-sm', className)}>
       <ol className="flex items-center space-x-2">
         {allItems.map((item, index) => {
           const isLast = index === allItems.length - 1;
-          
+
           return (
             <li key={index} className="flex items-center">
               {item.href && !isLast ? (
@@ -46,36 +41,32 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
                 </Link>
               ) : (
                 <span
-                  className={cn(
-                    isLast ? 'text-gray-900 font-medium' : 'text-gray-500'
-                  )}
+                  className={cn(isLast ? 'text-gray-900 font-medium' : 'text-gray-500')}
                   aria-current={isLast ? 'page' : undefined}
                 >
                   {item.label}
                 </span>
               )}
-              
+
               {!isLast && (
                 <span className="mx-2 text-gray-400" aria-hidden="true">
-                  {typeof separator === 'string' ? (
-                    separator
-                  ) : (
-                    separator || (
-                      <svg
-                        className="h-4 w-4"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 5l7 7-7 7"
-                        />
-                      </svg>
-                    )
-                  )}
+                  {typeof separator === 'string'
+                    ? separator
+                    : separator || (
+                        <svg
+                          className="h-4 w-4"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
+                      )}
                 </span>
               )}
             </li>
@@ -102,9 +93,7 @@ export const BreadcrumbJsonLd: React.FC<{ items: BreadcrumbItem[] }> = ({ items 
         '@type': 'ListItem',
         position: index + 2,
         name: item.label,
-        item: item.href
-          ? `${process.env.NEXT_PUBLIC_SITE_URL || ''}${item.href}`
-          : undefined,
+        item: item.href ? `${process.env.NEXT_PUBLIC_SITE_URL || ''}${item.href}` : undefined,
       })),
     ],
   };

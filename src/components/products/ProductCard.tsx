@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Eye, Heart, ShoppingCart } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useTranslation } from '@/lib/i18n';
 import { Card } from '@/components/ui/Card';
@@ -13,6 +12,26 @@ import { Modal } from '@/components/ui/Modal';
 import { useCartStore } from '@/store/cart';
 import { Product, ProductType } from '@/lib/graphql';
 import { getProductPrice, isInStock } from '@/lib/graphql/utils';
+
+// Icon components
+const EyeIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+  </svg>
+);
+
+const HeartIcon = ({ filled = false, className = "w-5 h-5" }: { filled?: boolean; className?: string }) => (
+  <svg className={className} fill={filled ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+  </svg>
+);
+
+const ShoppingCartIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+  </svg>
+);
 
 export interface ProductCardProps {
   product: Product;
@@ -36,41 +55,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
   const priceInfo = getProductPrice(product);
   const inStock = isInStock(product);
-  const discount = priceInfo.salePrice 
-    ? Math.round(((priceInfo.regularPrice - priceInfo.salePrice) / priceInfo.regularPrice) * 100) 
+  const discount = priceInfo.salePrice
+    ? Math.round(((priceInfo.regularPrice - priceInfo.salePrice) / priceInfo.regularPrice) * 100)
     : 0;
 
-  const getWineType = () => {
-    const category = product.productCategories?.find(cat => 
-      ['red', 'white', 'rose', 'sparkling'].includes(cat.slug)
-    );
-    return category?.slug;
-  };
-
   const getWineYear = () => {
-    const yearAttr = product.attributes?.find(attr => 
-      attr.name?.toLowerCase() === 'year' || attr.name?.toLowerCase() === 'рік'
+    const yearAttr = product.attributes?.find(
+      (attr) => attr.name?.toLowerCase() === 'year' || attr.name?.toLowerCase() === 'рік'
     );
     return yearAttr?.value || yearAttr?.options?.[0];
   };
 
-  const wineType = getWineType();
   const year = getWineYear();
-
-  const getWineTypeName = (type: string) => {
-    switch (type) {
-      case 'red':
-        return t.wine.redWine;
-      case 'white':
-        return t.wine.whiteWine;
-      case 'rose':
-        return t.wine.roseWine;
-      case 'sparkling':
-        return t.wine.sparklingWine;
-      default:
-        return type;
-    }
-  };
+  const mainCategory = product.productCategories?.nodes?.[0] || product.productCategories?.[0];
 
   const handleAddToCart = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -82,7 +79,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       if (product.type === ProductType.VARIABLE) {
         window.location.href = `/product/${product.slug}`;
       } else {
-        addItem(product);
+        addItem(product, 1);
       }
     } finally {
       setIsAddingToCart(false);
@@ -100,8 +97,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   return (
-    <Card 
-      className={cn('group relative', className)} 
+    <Card
+      className={cn('group relative', className)}
       hoverable
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -116,19 +113,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             className="object-cover group-hover:scale-105 transition-transform duration-500"
             priority={false}
           />
-          
+
           {/* Badges */}
           <div className="absolute top-2 right-2 flex flex-col gap-2">
-            {priceInfo.isOnSale && discount > 0 && (
-              <Badge variant="error">
-                -{discount}%
-              </Badge>
-            )}
-            {product.featured && (
-              <Badge variant="primary">
-                {t.product.featured}
-              </Badge>
-            )}
+            {priceInfo.isOnSale && discount > 0 && <Badge variant="error">-{discount}%</Badge>}
+            {product.featured && <Badge variant="primary">{t.common.new}</Badge>}
           </div>
 
           {/* Out of stock overlay */}
@@ -141,19 +130,21 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           )}
 
           {/* Quick actions overlay */}
-          <div className={cn(
-            "absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300",
-            "flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100"
-          )}>
+          <div
+            className={cn(
+              'absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300',
+              'flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100'
+            )}
+          >
             {onQuickView && (
               <Button
                 variant="secondary"
                 size="sm"
                 onClick={handleQuickView}
                 className="translate-y-4 group-hover:translate-y-0 transition-transform duration-300"
-                aria-label={t.product.quickView}
+                aria-label="Quick View"
               >
-                <Eye className="h-4 w-4" />
+                <EyeIcon className="h-4 w-4" />
               </Button>
             )}
             {onWishlistToggle && (
@@ -162,9 +153,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 size="sm"
                 onClick={handleWishlistToggle}
                 className="translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75"
-                aria-label={t.product.addToWishlist}
+                aria-label="Add to Wishlist"
               >
-                <Heart className={cn("h-4 w-4", isWishlisted && "fill-current")} />
+                <HeartIcon filled={isWishlisted} className="h-4 w-4" />
               </Button>
             )}
           </div>
@@ -176,19 +167,20 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           <div className="flex-1">
             <Link
               href={`/product/${product.slug}`}
-              className="font-medium text-gray-900 hover:text-purple-600 transition-colors line-clamp-2"
+              className="font-medium text-gray-900 hover:text-rose-600 transition-colors line-clamp-2"
             >
               {product.name}
             </Link>
-            <div className="flex items-center gap-2 mt-1 text-sm text-gray-600">
-              {wineType && <span>{getWineTypeName(wineType)}</span>}
-              {year && <span>{year}</span>}
+            <div className="flex items-center gap-2 mt-1">
+              {mainCategory && <span className="text-sm text-gray-600">{mainCategory.name}</span>}
+              {year && <span className="text-sm text-rose-500 font-medium">{year}</span>}
             </div>
           </div>
           <div className="text-right">
             {priceInfo.priceRange ? (
               <div className="text-lg font-semibold text-gray-900">
-                {formatCurrency(priceInfo.priceRange.min)} - {formatCurrency(priceInfo.priceRange.max)}
+                {formatCurrency(priceInfo.priceRange.min)} -{' '}
+                {formatCurrency(priceInfo.priceRange.max)}
               </div>
             ) : priceInfo.salePrice ? (
               <>
@@ -209,7 +201,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
         <Button
           onClick={handleAddToCart}
-          variant="primary"
+          variant="dark"
           size="sm"
           className="w-full"
           disabled={!inStock || isAddingToCart}
@@ -218,10 +210,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           {!inStock ? (
             t.product.outOfStock
           ) : product.type === ProductType.VARIABLE ? (
-            t.product.selectOptions
+            'Select Options'
           ) : (
             <>
-              <ShoppingCart className="h-4 w-4 mr-2" />
+              <ShoppingCartIcon className="h-4 w-4 mr-2" />
               {t.product.addToCart}
             </>
           )}

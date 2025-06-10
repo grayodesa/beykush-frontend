@@ -84,7 +84,7 @@ export const ORDER_FIELDS = gql`
 
 export const CHECKOUT = gql`
   ${ORDER_FIELDS}
-  
+
   mutation Checkout($input: CheckoutInput!) {
     checkout(input: $input) {
       order {
@@ -98,7 +98,7 @@ export const CHECKOUT = gql`
 
 export const UPDATE_CUSTOMER = gql`
   ${CUSTOMER_FIELDS}
-  
+
   mutation UpdateCustomer($input: UpdateCustomerInput!) {
     updateCustomer(input: $input) {
       customer {
@@ -110,7 +110,7 @@ export const UPDATE_CUSTOMER = gql`
 
 export const CREATE_ORDER = gql`
   ${ORDER_FIELDS}
-  
+
   mutation CreateOrder($input: CreateOrderInput!) {
     createOrder(input: $input) {
       order {
@@ -122,7 +122,7 @@ export const CREATE_ORDER = gql`
 
 export const GET_ORDER = gql`
   ${ORDER_FIELDS}
-  
+
   query GetOrder($id: ID!) {
     order(id: $id) {
       ...OrderFields

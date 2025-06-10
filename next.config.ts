@@ -13,6 +13,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: '**.wordpress.com',
       },
+      {
+        protocol: 'http',
+        hostname: 'beykush.local',
+      },
     ],
     formats: ['image/avif', 'image/webp'],
   },

@@ -55,7 +55,7 @@ export interface ProductVariation {
   regularPrice?: Maybe<string>;
   salePrice?: Maybe<string>;
   onSale: boolean;
-  stockStatus: StockStatus;
+  stockStatus?: Maybe<StockStatus>;
   stockQuantity?: Maybe<number>;
   manageStock?: Maybe<boolean>;
   attributes: ProductAttribute[];
@@ -76,8 +76,8 @@ export interface Product {
   averageRating?: Maybe<number>;
   reviewCount?: Maybe<number>;
   image?: Maybe<ProductImage>;
-  galleryImages?: Maybe<ProductImage[]>;
-  productCategories?: Maybe<ProductCategory[]>;
+  galleryImages?: Maybe<{ nodes: ProductImage[] }>;
+  productCategories?: Maybe<{ nodes: ProductCategory[] }>;
   attributes?: Maybe<ProductAttribute[]>;
   // Price fields (only for SimpleProduct and VariableProduct)
   price?: Maybe<string>;
@@ -204,10 +204,12 @@ export interface Order {
   shipping?: Maybe<Address>;
   lineItems: OrderLineItem[];
   appliedCoupons?: Maybe<AppliedCoupon[]>;
-  shippingLines?: Maybe<Array<{
-    methodTitle?: Maybe<string>;
-    total: string;
-  }>>;
+  shippingLines?: Maybe<
+    Array<{
+      methodTitle?: Maybe<string>;
+      total: string;
+    }>
+  >;
 }
 
 // Query/Mutation Input Types
@@ -238,25 +240,31 @@ export interface CheckoutInput {
   shipToDifferentAddress?: Maybe<boolean>;
   paymentMethod: string;
   customerNote?: Maybe<string>;
-  metaData?: Maybe<Array<{
-    key: string;
-    value: string;
-  }>>;
+  metaData?: Maybe<
+    Array<{
+      key: string;
+      value: string;
+    }>
+  >;
 }
 
 export interface CreateOrderInput {
   billing?: Maybe<Address>;
   shipping?: Maybe<Address>;
-  lineItems?: Maybe<Array<{
-    productId?: Maybe<number>;
-    variationId?: Maybe<number>;
-    quantity: number;
-  }>>;
-  shippingLines?: Maybe<Array<{
-    methodId: string;
-    methodTitle: string;
-    total: string;
-  }>>;
+  lineItems?: Maybe<
+    Array<{
+      productId?: Maybe<number>;
+      variationId?: Maybe<number>;
+      quantity: number;
+    }>
+  >;
+  shippingLines?: Maybe<
+    Array<{
+      methodId: string;
+      methodTitle: string;
+      total: string;
+    }>
+  >;
   paymentMethod: string;
   paymentMethodTitle?: Maybe<string>;
   status?: Maybe<OrderStatus>;

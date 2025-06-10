@@ -26,18 +26,24 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  const formatCurrency = useCallback((amount: number) => {
-    return new Intl.NumberFormat(language === 'uk' ? 'uk-UA' : 'en-US', {
-      style: 'currency',
-      currency: 'UAH',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(amount);
-  }, [language]);
+  const formatCurrency = useCallback(
+    (amount: number) => {
+      return new Intl.NumberFormat(language === 'uk' ? 'uk-UA' : 'en-US', {
+        style: 'currency',
+        currency: 'UAH',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      }).format(amount);
+    },
+    [language]
+  );
 
-  const formatNumber = useCallback((number: number) => {
-    return new Intl.NumberFormat(language === 'uk' ? 'uk-UA' : 'en-US').format(number);
-  }, [language]);
+  const formatNumber = useCallback(
+    (number: number) => {
+      return new Intl.NumberFormat(language === 'uk' ? 'uk-UA' : 'en-US').format(number);
+    },
+    [language]
+  );
 
   const value: I18nContextType = {
     language,

@@ -3,7 +3,7 @@ import { CART_FIELDS } from '../fragments/cart';
 
 export const ADD_TO_CART = gql`
   ${CART_FIELDS}
-  
+
   mutation AddToCart($productId: Int!, $quantity: Int = 1, $variationId: Int) {
     addToCart(input: { productId: $productId, quantity: $quantity, variationId: $variationId }) {
       cart {
@@ -25,7 +25,7 @@ export const ADD_TO_CART = gql`
 
 export const UPDATE_CART_ITEM = gql`
   ${CART_FIELDS}
-  
+
   mutation UpdateCartItem($key: ID!, $quantity: Int!) {
     updateItemQuantities(input: { items: [{ key: $key, quantity: $quantity }] }) {
       cart {
@@ -41,7 +41,7 @@ export const UPDATE_CART_ITEM = gql`
 
 export const REMOVE_FROM_CART = gql`
   ${CART_FIELDS}
-  
+
   mutation RemoveFromCart($keys: [ID!]!) {
     removeItemsFromCart(input: { keys: $keys }) {
       cart {
@@ -62,7 +62,7 @@ export const REMOVE_FROM_CART = gql`
 
 export const EMPTY_CART = gql`
   ${CART_FIELDS}
-  
+
   mutation EmptyCart {
     emptyCart(input: {}) {
       cart {
@@ -79,7 +79,7 @@ export const EMPTY_CART = gql`
 
 export const APPLY_COUPON = gql`
   ${CART_FIELDS}
-  
+
   mutation ApplyCoupon($code: String!) {
     applyCoupon(input: { code: $code }) {
       cart {
@@ -95,7 +95,7 @@ export const APPLY_COUPON = gql`
 
 export const REMOVE_COUPON = gql`
   ${CART_FIELDS}
-  
+
   mutation RemoveCoupon($code: String!) {
     removeCoupons(input: { codes: [$code] }) {
       cart {
@@ -111,7 +111,7 @@ export const REMOVE_COUPON = gql`
 
 export const UPDATE_SHIPPING_METHOD = gql`
   ${CART_FIELDS}
-  
+
   mutation UpdateShippingMethod($shippingMethods: [String!]!) {
     updateShippingMethod(input: { shippingMethods: $shippingMethods }) {
       cart {
@@ -123,7 +123,7 @@ export const UPDATE_SHIPPING_METHOD = gql`
 
 export const GET_CART = gql`
   ${CART_FIELDS}
-  
+
   query GetCart {
     cart {
       ...CartFields

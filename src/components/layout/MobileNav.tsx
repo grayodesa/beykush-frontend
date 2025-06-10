@@ -56,9 +56,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({
     if (!isOpen || !navRef.current) return;
 
     const nav = navRef.current;
-    const focusableElements = nav.querySelectorAll(
-      'a, button, [tabindex]:not([tabindex="-1"])'
-    );
+    const focusableElements = nav.querySelectorAll('a, button, [tabindex]:not([tabindex="-1"])');
     const firstFocusable = focusableElements[0] as HTMLElement;
     const lastFocusable = focusableElements[focusableElements.length - 1] as HTMLElement;
 
