@@ -2,13 +2,14 @@ import { getClient } from '@/lib/apollo';
 import { GET_FEATURED_PRODUCTS } from '@/lib/graphql/queries/products';
 import { transformProducts } from '@/lib/graphql/utils';
 import { ProductGrid } from '@/components/products';
+import { Product } from '@/lib/graphql';
 import { Button } from '@/components/ui';
 import Link from 'next/link';
 
 export default async function HomePage() {
   const client = getClient();
 
-  let featuredProducts = [];
+  let featuredProducts: Product[] = [];
   let error = null;
   try {
     const { data } = await client.query({
@@ -18,9 +19,9 @@ export default async function HomePage() {
     });
     const rawProducts = data?.products?.nodes || [];
     featuredProducts = transformProducts(rawProducts);
-  } catch (err: any) {
+  } catch (err) {
     console.error('Failed to fetch featured products:', err);
-    error = err.message || 'Failed to fetch products';
+    error = err instanceof Error ? err.message : 'Failed to fetch products';
   }
 
   return (

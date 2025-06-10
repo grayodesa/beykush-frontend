@@ -1,6 +1,7 @@
 import { getClient } from '@/lib/apollo';
 import { GET_PRODUCTS, GET_PRODUCT_CATEGORIES } from '@/lib/graphql/queries/products';
 import { ProductGrid, ProductFilters, ProductSeries } from '@/components/products';
+import { Product, ProductCategory } from '@/lib/graphql';
 import { Breadcrumb } from '@/components/layout';
 import { filterUniqueCategories } from '@/lib/graphql/utils/categories';
 import { transformProducts } from '@/lib/graphql/utils';
@@ -17,8 +18,8 @@ export default async function ProductsPage({
   const sort = params.sort || 'date';
 
   // Fetch products
-  let products = [];
-  let pageInfo = {};
+  let products: Product[] = [];
+  let pageInfo: { hasNextPage?: boolean; hasPreviousPage?: boolean } = {};
   let productsError = null;
   
   // Map sort param to GraphQL values
@@ -46,13 +47,13 @@ export default async function ProductsPage({
     const rawProducts = data?.products?.nodes || [];
     products = transformProducts(rawProducts);
     pageInfo = data?.products?.pageInfo || {};
-  } catch (error: any) {
+  } catch (error) {
     console.error('Failed to fetch products:', error);
-    productsError = error.message || 'Failed to fetch products';
+    productsError = error instanceof Error ? error.message : 'Failed to fetch products';
   }
 
   // Fetch categories
-  let categories = [];
+  let categories: ProductCategory[] = [];
   let categoriesError = null;
   try {
     const { data } = await client.query({
@@ -62,9 +63,9 @@ export default async function ProductsPage({
     });
     const rawCategories = data?.productCategories?.nodes || [];
     categories = filterUniqueCategories(rawCategories);
-  } catch (error: any) {
+  } catch (error) {
     console.error('Failed to fetch categories:', error);
-    categoriesError = error.message || 'Failed to fetch categories';
+    categoriesError = error instanceof Error ? error.message : 'Failed to fetch categories';
   }
 
   const breadcrumbs = [

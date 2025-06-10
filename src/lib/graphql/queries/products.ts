@@ -1,10 +1,4 @@
 import { gql } from '@apollo/client';
-import {
-  PRODUCT_FIELDS,
-  SIMPLE_PRODUCT_FIELDS,
-  VARIABLE_PRODUCT_FIELDS,
-  PRODUCT_VARIATION_FIELDS,
-} from '../fragments/product';
 
 export const GET_PRODUCTS = gql`
   query GetProducts(
